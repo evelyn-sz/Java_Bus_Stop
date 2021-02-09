@@ -20,6 +20,7 @@ public class Bus {
     }
 
     public void addPassenger(Passenger passenger) {
+        if(passengerCount() < this.capacity)
         this.passengerList.add(passenger);
     }
 }
