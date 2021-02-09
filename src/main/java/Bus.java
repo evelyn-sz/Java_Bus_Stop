@@ -1,3 +1,4 @@
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 public class Bus {
@@ -5,10 +6,14 @@ public class Bus {
     private int capacity;
     private ArrayList<Passenger> passengerList;
 
-    public Bus(String destination, int capacity){
+    public Bus(String destination, int capacity) {
         this.destination = destination;
         this.capacity = capacity;
         this.passengerList = new ArrayList<Passenger>();
+    }
+
+    public ArrayList<Passenger> getPassengers() {
+        return this.passengerList;
     }
 
     public String getDestination() {
@@ -20,11 +25,18 @@ public class Bus {
     }
 
     public void addPassenger(Passenger passenger) {
-        if(passengerCount() < this.capacity)
-        this.passengerList.add(passenger);
+        if (passengerCount() < this.capacity)
+            this.passengerList.add(passenger);
     }
 
     public void removePassenger(Passenger passenger) {
         this.passengerList.remove(passenger);
+    }
+
+    public void pickUpFromBusStop(BusStop busStop) {
+        if(this.passengerCount() < this.capacity && busStop.queueSize() > 0){
+            Passenger passengerRemoved = busStop.removeFromQueue();
+            this.addPassenger(passengerRemoved);
+        }
     }
 }
